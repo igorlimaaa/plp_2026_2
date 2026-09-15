@@ -25,28 +25,31 @@ Enquanto trabalhos anteriores exploraram abordagens de tratamento de erros no pa
 
 ```
 {
- classe ContaBancaria {
- var saldo = 100;
- metodo sacar(valor) {
- // defer: executado obrigatoriamente ao finalizar a execução do método (ordem LIFO)
- defer write("1. [defer] Registro de auditoria gravado no log.");
- defer write("2. [defer] Estado do objeto conta liberado.");
- try {
- if (valor > saldo) {
- throw "Saldo insuficiente para o saque";
- }
- saldo = saldo - valor;
- write("Saque efetuado com sucesso. Saldo restante: " + saldo);
- } catch (erro) {
- write("Falha ao processar saque: " + erro);
- } finally {
- // finally: executado obrigatoriamente ao final da estrutura try/catch
- write("3. [finally] Bloco de confirmacao concluido.");
- }
- }
- };
- var minhaConta = new ContaBancaria();
- minhaConta.sacar(150)
+  classe ContaBancaria {
+    var saldo = 100;
+
+    metodo sacar(valor) {
+      // defer: executado obrigatoriamente ao finalizar a execução do método (ordem LIFO)
+      defer write("1. [defer] Registro de auditoria gravado no log.");
+      defer write("2. [defer] Estado do objeto conta liberado.");
+
+      try {
+        if (valor > saldo) {
+          throw "Saldo insuficiente para o saque";
+        }
+        saldo = saldo - valor;
+        write("Saque efetuado com sucesso. Saldo restante: " + saldo);
+      } catch (erro) {
+        write("Falha ao processar saque: " + erro);
+      } finally {
+        // finally: executado obrigatoriamente ao final da estrutura try/catch
+        write("3. [finally] Bloco de confirmacao concluido.");
+      }
+    }
+  };
+
+  var minhaConta = new ContaBancaria();
+  minhaConta.sacar(150)
 }
 ```
 
