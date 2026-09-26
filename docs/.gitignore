@@ -1,0 +1,10 @@
+_site
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+vendor
+ide/
+interpretador.html
+classes.js
+classes.js.map
+classes.js.teavmdbg
