@@ -24,18 +24,18 @@ Suporte ao Mecanismo de Exceções (`try` / `catch` / `finally` / `throw`) e Adi
 ```java
 {
   classe ContaBancaria {
-    var saldo = 100;
+    int saldo = 100;
 
-    metodo sacar(valor) {
+    proc sacar(int valor) {
       // defer: executado obrigatoriamente ao finalizar a execução do método (ordem LIFO)
       defer write("1. [defer] Registro de auditoria gravado no log.");
       defer write("2. [defer] Estado do objeto conta liberado.");
 
       try {
-        if (valor > saldo) {
+        if valor > saldo then {
           throw "Saldo insuficiente para o saque";
         }
-        saldo = saldo - valor;
+        this.saldo := this.saldo - valor;
         write("Saque efetuado com sucesso. Saldo restante: " + saldo);
       } catch (erro) {
         write("Falha ao processar saque: " + erro);
@@ -46,10 +46,14 @@ Suporte ao Mecanismo de Exceções (`try` / `catch` / `finally` / `throw`) e Adi
     }
   };
 
-  var minhaConta = new ContaBancaria();
-  minhaConta.sacar(150)
+  {
+    ContaBancaria minhaConta := new ContaBancaria;
+    minhaConta.sacar(150)
+  }
 }
 ```
+
+> As declarações, atribuições, condições e instanciação de objetos do exemplo seguem a sintaxe já usada pela gramática OO1. `try/catch/finally` e `defer` representam os recursos da extensão e ainda não são reconhecidos pelo parser atual.
 
 ## 4. BNF
 
@@ -126,5 +130,18 @@ ListaDeclaracaoParametro ::= Tipo Id | Tipo Id "," ListaDeclaracaoParametro
 
 Tipo ::= TipoClasse | TipoPrimitivo
 TipoClasse ::= Id
-TipoPrimitivo ::= TipoPrimitivo
+TipoPrimitivo ::= "int" | "boolean" | "string"
 ```
+
+## 5. Como executar o projeto OO1
+
+Com o JDK e o Maven instalados, execute a partir da raiz do repositório:
+
+```bash
+cd Objetos1
+mvn compile exec:java -Dexec.args=../Testes/TesteOO1_ContaBancaria.txt
+```
+
+O Maven gera o parser JavaCC, compila o projeto e executa o arquivo informado. Para executar outro programa, substitua o caminho depois de `-Dexec.args=`.
+
+**Compatibilidade do arquivo de teste:** o arquivo usa a sintaxe OO1 atual para atributos (`int`), procedimentos (`proc`), condições (`then`), atribuições (`:=`) e objetos (`:= new Classe`). O parser reconhece `throw`, mas ainda não reconhece `try/catch/finally` nem `defer`; a execução completa depende da implementação desses recursos na gramática e no interpretador.

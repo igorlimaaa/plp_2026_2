@@ -6,6 +6,7 @@
 
   <properties>
     <revision>0.0.1</revision>
+    <exec.args>input</exec.args>
   </properties>
   <build>
     <sourceDirectory>src</sourceDirectory>
@@ -42,7 +43,7 @@
         <artifactId>exec-maven-plugin</artifactId>
         <configuration>
           <mainClass>loo1.plp.orientadaObjetos1.parser.OO1Parser</mainClass>
-          <commandlineArgs>input</commandlineArgs>
+          <commandlineArgs>${exec.args}</commandlineArgs>
         </configuration>
       </plugin>
       <plugin>
