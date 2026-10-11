@@ -61,6 +61,7 @@ public class ExpLength extends ExpUnaria {
         throws VariavelNaoDeclaradaException, ClasseNaoDeclaradaException {
         boolean result;
         if (super.checaTipo(ambiente) &&
+            getExp().getTipo(ambiente) instanceof TipoPrimitivo &&
             ((TipoPrimitivo)getExp().getTipo(ambiente)).eString()) {
             result = true;
         }
