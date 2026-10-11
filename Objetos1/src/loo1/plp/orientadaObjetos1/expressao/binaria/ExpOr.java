@@ -55,6 +55,8 @@ public class ExpOr extends ExpBinaria {
         throws VariavelNaoDeclaradaException, ClasseNaoDeclaradaException {
         boolean result;
         if (super.checaTipo(ambiente) &&
+            getEsq().getTipo(ambiente) instanceof TipoPrimitivo &&
+            getDir().getTipo(ambiente) instanceof TipoPrimitivo &&
             ((TipoPrimitivo)getEsq().getTipo(ambiente)).eBooleano() &&
             ((TipoPrimitivo)getDir().getTipo(ambiente)).eBooleano()) {
             result = true;
