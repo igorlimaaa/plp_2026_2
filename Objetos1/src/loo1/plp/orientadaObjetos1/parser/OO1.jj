@@ -836,6 +836,14 @@ Expressao PExpBinaria() :
       {
         retorno = new ExpEquals(retorno, param2);
       }
+    | < GT > param2 = PExpBinaria2()
+      {
+        retorno = new ExpMaior(retorno, param2);
+      }
+    | < LT > param2 = PExpBinaria2()
+      {
+        retorno = new ExpMenor(retorno, param2);
+      }
     )*
   )
   {
