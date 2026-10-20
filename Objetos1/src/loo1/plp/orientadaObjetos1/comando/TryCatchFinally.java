@@ -41,16 +41,14 @@ public class TryCatchFinally implements Comando {
             EntradaInvalidaException {
         AmbienteExecucaoOO1 resultado = ambiente;
         try {
+            resultado = comandoTry.executar(resultado);
+        } catch (ExcecaoLancadaException excecao) {
+            resultado.incrementa();
             try {
-                resultado = comandoTry.executar(resultado);
-            } catch (ExcecaoLancadaException excecao) {
-                resultado.incrementa();
-                try {
-                    resultado.map(identificadorCatch, excecao.getValorLancado());
-                    resultado = comandoCatch.executar(resultado);
-                } finally {
-                    resultado.restaura();
-                }
+                resultado.map(identificadorCatch, excecao.getValorLancado());
+                resultado = comandoCatch.executar(resultado);
+            } finally {
+                resultado.restaura();
             }
         } finally {
             if (comandoFinally != null) {

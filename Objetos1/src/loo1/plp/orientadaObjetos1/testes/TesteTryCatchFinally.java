@@ -78,6 +78,13 @@ public final class TesteTryCatchFinally {
         exige(saida.indexOf("aninhada") >= 0, "catch deve capturar throw de bloco aninhado");
         exige(saida.indexOf("escopos restaurados") > saida.indexOf("aninhada"),
             "finally deve executar após throw em bloco aninhado");
+
+        String escopoSombrado = programa(
+            "{ int valor = 10; try { { int valor = 20; throw \"aninhada\" } } "
+                + "catch (erro) { skip }; write(valor) }");
+        saida = executa(escopoSombrado);
+        exige(saida.contains("10") && !saida.contains("20"),
+            "escopo local do try não pode ocultar a variável externa após a exceção");
         System.out.println("Teste de verificaEscopoAninhadoComExcecao passou.");
     }
 
