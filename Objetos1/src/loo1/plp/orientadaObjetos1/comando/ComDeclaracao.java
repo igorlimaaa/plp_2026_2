@@ -46,9 +46,12 @@ public class ComDeclaracao implements Comando {
                ClasseNaoDeclaradaException, ClasseJaDeclaradaException,
                ObjetoJaDeclaradoException, ObjetoNaoDeclaradoException, EntradaInvalidaException{
         ambiente.incrementa();
-        ambiente = comando.executar(declaracao.elabora(ambiente));
-        ambiente.restaura();
-        return ambiente;
+        try {
+            ambiente = comando.executar(declaracao.elabora(ambiente));
+            return ambiente;
+        } finally {
+            ambiente.restaura();
+        }
     }
 
     /**
@@ -61,8 +64,11 @@ public class ComDeclaracao implements Comando {
                ClasseNaoDeclaradaException, ClasseJaDeclaradaException{
         boolean resposta;
         ambiente.incrementa();
-        resposta = declaracao.checaTipo(ambiente) && comando.checaTipo(ambiente);
-        ambiente.restaura();
-        return resposta;
+        try {
+            resposta = declaracao.checaTipo(ambiente) && comando.checaTipo(ambiente);
+            return resposta;
+        } finally {
+            ambiente.restaura();
+        }
     }
 }

@@ -66,6 +66,7 @@ public class While implements Comando{
         ProcedimentoNaoDeclaradoException, ProcedimentoJaDeclaradoException,
         ClasseNaoDeclaradaException, ClasseJaDeclaradaException {
         return expressao.checaTipo(ambiente) &&
+             expressao.getTipo(ambiente) instanceof TipoPrimitivo &&
                ((TipoPrimitivo)expressao.getTipo(ambiente)).eBooleano() &&
                comando.checaTipo(ambiente);
     }

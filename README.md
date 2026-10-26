@@ -32,16 +32,16 @@ Suporte ao Mecanismo de Exceções (`try` / `catch` / `finally` / `throw`) e Adi
       defer write("2. [defer] Estado do objeto conta liberado.");
 
       try {
-        if valor > saldo then {
-          throw "Saldo insuficiente para o saque";
-        }
+        if valor > this.saldo then {
+          throw "Saldo insuficiente para o saque"
+        };
         this.saldo := this.saldo - valor;
-        write("Saque efetuado com sucesso. Saldo restante: " + saldo);
+        write("Saque efetuado com sucesso. Saldo restante: " ++ this.saldo)
       } catch (erro) {
-        write("Falha ao processar saque: " + erro);
+        write("Falha ao processar saque: " ++ erro)
       } finally {
         // finally: executado obrigatoriamente ao final da estrutura try/catch
-        write("3. [finally] Bloco de confirmacao concluido.");
+        write("3. [finally] Bloco de confirmacao concluido.")
       }
     }
   };
@@ -53,7 +53,7 @@ Suporte ao Mecanismo de Exceções (`try` / `catch` / `finally` / `throw`) e Adi
 }
 ```
 
-> As declarações, atribuições, condições e instanciação de objetos do exemplo seguem a sintaxe já usada pela gramática OO1. `try/catch/finally` e `defer` representam os recursos da extensão e ainda não são reconhecidos pelo parser atual.
+> Este é o exemplo completo da linguagem pretendida para a entrega final. Nesta branch, declarações, atribuições, condições, instanciação, comparações `>` e `<` e o bloco `try/catch/finally` são aceitos pela gramática OO1. A variável do `catch` tem tipo dinâmico: pode ser escrita ou concatenada com `++`, mas não usada como operando numérico ou lógico. `defer` permanece no exemplo por fazer parte do escopo final do projeto; sua implementação será feita posteriormente, e ainda não é reconhecida pelo parser atual.
 
 ## 4. BNF
 
@@ -111,6 +111,8 @@ ExpBinaria ::= Expressao "+" Expressao
              | Expressao "and" Expressao
              | Expressao "or" Expressao
              | Expressao "==" Expressao
+             | Expressao ">" Expressao
+             | Expressao "<" Expressao
              | Expressao "++" Expressao
 
 LeftExpression ::= Id | AcessoAtributo
@@ -142,6 +144,10 @@ cd Objetos1
 mvn compile exec:java -Dexec.args=../Testes/TesteOO1_ContaBancaria.txt
 ```
 
-O Maven gera o parser JavaCC, compila o projeto e executa o arquivo informado. Para executar outro programa, substitua o caminho depois de `-Dexec.args=`.
+O Maven gera o parser JavaCC, compila o projeto e executa o arquivo informado. Para executar outro programa, substitua o caminho depois de `-Dexec.args=`. Os testes do comando `try/catch/finally` estão em `Objetos1/src/loo1/plp/orientadaObjetos1/testes/TesteTryCatchFinally.java`; execute-os a partir de `Objetos1` após compilar com `mvn compile`:
 
-**Compatibilidade do arquivo de teste:** o arquivo usa a sintaxe OO1 atual para atributos (`int`), procedimentos (`proc`), condições (`then`), atribuições (`:=`) e objetos (`:= new Classe`). O parser reconhece `throw`, mas ainda não reconhece `try/catch/finally` nem `defer`; a execução completa depende da implementação desses recursos na gramática e no interpretador.
+```bash
+java -cp target/classes loo1.plp.orientadaObjetos1.testes.TesteTryCatchFinally
+```
+
+**Compatibilidade do exemplo:** até o momento, o parser reconhece `throw`, `try/catch/finally`, `>` e `<`, além da sintaxe OO1 usada para atributos (`int`), procedimentos (`proc`), condições (`then`), atribuições (`:=`) e objetos (`:= new Classe`). O exemplo completo também contém `defer`, que ainda não é reconhecido e será implementado separadamente depois.

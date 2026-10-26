@@ -10,6 +10,7 @@ import loo1.plp.orientadaObjetos1.expressao.valor.ValorString;
 import loo1.plp.orientadaObjetos1.memoria.AmbienteCompilacaoOO1;
 import loo1.plp.orientadaObjetos1.memoria.AmbienteExecucaoOO1;
 import loo1.plp.orientadaObjetos1.util.Tipo;
+import loo1.plp.orientadaObjetos1.util.TipoExcecao;
 import loo1.plp.orientadaObjetos1.util.TipoPrimitivo;
 
 
@@ -54,16 +55,16 @@ public class ExpConcat extends ExpBinaria{
      */
     public boolean checaTipo(AmbienteCompilacaoOO1 ambiente)
         throws VariavelNaoDeclaradaException, ClasseNaoDeclaradaException {
-        boolean result;
-        if (super.checaTipo(ambiente) &&
-            ((TipoPrimitivo)getEsq().getTipo(ambiente)).eString() ||//we changed && to ||
-            ((TipoPrimitivo)getDir().getTipo(ambiente)).eString()) {
-            result = true;
+        if (!super.checaTipo(ambiente)) {
+            return false;
         }
-        else {
-            result = false;
-        }
-        return result;
+        Tipo tipoEsquerdo = getEsq().getTipo(ambiente);
+        Tipo tipoDireito = getDir().getTipo(ambiente);
+        boolean esquerdoConcatenavel = tipoEsquerdo instanceof TipoExcecao ||
+            tipoEsquerdo instanceof TipoPrimitivo && ((TipoPrimitivo)tipoEsquerdo).eString();
+        boolean direitoConcatenavel = tipoDireito instanceof TipoExcecao ||
+            tipoDireito instanceof TipoPrimitivo && ((TipoPrimitivo)tipoDireito).eString();
+        return esquerdoConcatenavel || direitoConcatenavel;
     }
 
     /**

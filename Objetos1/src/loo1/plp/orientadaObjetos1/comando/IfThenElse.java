@@ -71,6 +71,7 @@ public class IfThenElse implements Comando {
                ProcedimentoNaoDeclaradoException, ProcedimentoJaDeclaradoException,
                ClasseJaDeclaradaException, ClasseNaoDeclaradaException {
         return expressao.checaTipo(ambiente) &&
+             expressao.getTipo(ambiente) instanceof TipoPrimitivo &&
                ((TipoPrimitivo)expressao.getTipo(ambiente)).eBooleano() &&
                comandoThen.checaTipo(ambiente) &&
                comandoElse.checaTipo(ambiente);

@@ -57,6 +57,8 @@ public class ExpAnd extends ExpBinaria{
 
         boolean result;
         if (super.checaTipo(ambiente) &&
+            getEsq().getTipo(ambiente) instanceof TipoPrimitivo &&
+            getDir().getTipo(ambiente) instanceof TipoPrimitivo &&
             ((TipoPrimitivo)getEsq().getTipo(ambiente)).eBooleano() &&
             ((TipoPrimitivo)getDir().getTipo(ambiente)).eBooleano()) {
             result = true;
