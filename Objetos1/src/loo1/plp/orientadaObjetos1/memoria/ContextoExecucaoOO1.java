@@ -3,12 +3,15 @@ package loo1.plp.orientadaObjetos1.memoria;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Stack;
 
 import loo1.plp.expressions2.expression.Id;
 import loo1.plp.expressions2.memory.VariavelJaDeclaradaException;
 import loo1.plp.expressions2.memory.VariavelNaoDeclaradaException;
+import loo1.plp.orientadaObjetos1.comando.Comando;
 import loo1.plp.orientadaObjetos1.excecao.declaracao.ClasseJaDeclaradaException;
 import loo1.plp.orientadaObjetos1.excecao.declaracao.ClasseNaoDeclaradaException;
 import loo1.plp.orientadaObjetos1.excecao.declaracao.ObjetoJaDeclaradoException;
@@ -30,6 +33,12 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
 	 * A pilha de blocos de contexto.
 	 */
     private Stack<HashMap<Id, Valor>> pilha;
+
+    /**
+	 * A pilha (LIFO) de comandos adiados pelo <code>defer</code> para esta
+	 * invocacao de metodo (ou para o programa, quando fora de um metodo).
+	 */
+    private Deque<Comando> comandosDefer;
 
     /**
 	 * o Mapeamento de classes do contexto.
@@ -66,9 +75,10 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
         mapObjetos = new HashMap<ValorRef, Objeto>();              	
 
         mapDefClasse = new HashMap<Id, DefClasse>();    // criacao do mapeamento de classes
-        
+
         this.entrada = null;
         this.saida = new ListaValor();
+        this.comandosDefer = new ArrayDeque<Comando>();
     }
 
     /**
@@ -84,6 +94,7 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
 	   HashMap<Id, Valor> aux = new HashMap<Id, Valor>();
        aux.put(new Id("this"), new ValorNull());
        pilha.push(aux);
+       this.comandosDefer = new ArrayDeque<Comando>();
 
   }
 
@@ -99,9 +110,10 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
         mapObjetos = new HashMap<ValorRef, Objeto>();       
 
         mapDefClasse = new HashMap<Id, DefClasse>();    // inicializacao do map
-        
+
         this.entrada = entrada;
         this.saida = new ListaValor();
+        this.comandosDefer = new ArrayDeque<Comando>();
     }
 
     /**
@@ -512,6 +524,29 @@ public class ContextoExecucaoOO1 implements AmbienteExecucaoOO1 {
         } else {
             return result;
         }
-    }    
+    }
+
+    /**
+	 * Empilha um comando para ser executado na saida do metodo (ou do
+	 * programa, se fora de qualquer metodo) atual, conforme o comando
+	 * <code>defer</code>.
+	 *
+	 * @param comando
+	 *            Comando a ser executado adiadamente.
+	 */
+    public void adicionaDefer(Comando comando) {
+        comandosDefer.push(comando);
+    }
+
+    /**
+	 * Remove e retorna o ultimo comando empilhado por <code>defer</code>
+	 * nesta invocacao (ordem LIFO), ou <code>null</code> se nao houver
+	 * nenhum comando adiado pendente.
+	 *
+	 * @return o ultimo comando adiado pendente, ou <code>null</code>.
+	 */
+    public Comando removeUltimoDefer() {
+        return comandosDefer.isEmpty() ? null : comandosDefer.pop();
+    }
 
 }

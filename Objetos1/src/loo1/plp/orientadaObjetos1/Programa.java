@@ -59,10 +59,18 @@ public class Programa {
         if(ambiente == null)
             throw new EntradaNaoFornecidaException();
         
-        //nao precisa incrementar no inicio, j� que n�o existe a possibilidade 
+        //nao precisa incrementar no inicio, j� que n�o existe a possibilidade
         //de declarar vari�veis antes de uma declara��o de classes
         //ambiente.incrementa();
-        ambiente = comando.executar(decClasse.elabora(ambiente));
+        ambiente = decClasse.elabora(ambiente);
+        try {
+            ambiente = comando.executar(ambiente);
+        } finally {
+            Comando comandoAdiado;
+            while ((comandoAdiado = ambiente.removeUltimoDefer()) != null) {
+                ambiente = comandoAdiado.executar(ambiente);
+            }
+        }
         //ambiente.restaura();
         return ambiente.getSaida();
     }
