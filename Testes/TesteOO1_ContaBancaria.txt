@@ -4,9 +4,8 @@
 
     proc sacar(int valor) {
       // defer: executado obrigatoriamente ao finalizar a execução do método (ordem LIFO)
-      // TODO: implementar defer e descomentar função
-      // defer write("1. [defer] Registro de auditoria gravado no log.");
-      // defer write("2. [defer] Estado do objeto conta liberado.");
+      defer write("1. [defer] Registro de auditoria gravado no log.");
+      defer write("2. [defer] Estado do objeto conta liberado.");
 
       try {
         if valor > this.saldo then {

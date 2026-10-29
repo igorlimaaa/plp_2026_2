@@ -20,6 +20,7 @@ Suporte ao Mecanismo de Exceções (`try` / `catch` / `finally` / `throw`) e Adi
 - **Garantia de Finalização (`finally`):** Bloco cuja execução é garantida obrigatoriamente antes de concluir a instrução `try`, independentemente da ocorrência de exceções.
   - [TryCatchFinally.java](https://github.com/igorlimaaa/plp_2026_2/blob/main/Objetos1/src/loo1/plp/orientadaObjetos1/comando/TryCatchFinally.java)
 - **Comando de Adiamento (`defer`):** Agenda um comando para ser executado obrigatoriamente no momento de saída do método atual. Múltiplos comandos `defer` declarados dentro do método são organizados em uma pilha LIFO.
+  - [Defer.java](https://github.com/igorlimaaa/plp_2026_2/blob/main/Objetos1/src/loo1/plp/orientadaObjetos1/comando/Defer.java)
 
 ## 3. Exemplo de Código na Linguagem Estendida
 
@@ -55,7 +56,7 @@ Suporte ao Mecanismo de Exceções (`try` / `catch` / `finally` / `throw`) e Adi
 }
 ```
 
-> Este é o exemplo completo da linguagem pretendida para a entrega final. Nesta branch, declarações, atribuições, condições, instanciação, comparações `>` e `<` e o bloco `try/catch/finally` são aceitos pela gramática OO1. A variável do `catch` tem tipo dinâmico: pode ser escrita ou concatenada com `++`, mas não usada como operando numérico ou lógico. `defer` permanece no exemplo por fazer parte do escopo final do projeto; sua implementação será feita posteriormente, e ainda não é reconhecida pelo parser atual.
+> Este é o exemplo completo da linguagem pretendida para a entrega final. Nesta branch, declarações, atribuições, condições, instanciação, comparações `>` e `<`, o bloco `try/catch/finally` e o comando `defer` são aceitos pela gramática OO1. A variável do `catch` tem tipo dinâmico: pode ser escrita ou concatenada com `++`, mas não usada como operando numérico ou lógico. `defer` empilha o comando e só o executa quando o método atual termina (ou quando o programa termina, se declarado fora de qualquer método); por isso, o comando adiado deve referenciar apenas `this`, atributos ou parâmetros do método — uma variável local de um bloco aninhado já está fora de escopo quando os `defer` do método são executados.
 
 ## 4. BNF
 

@@ -5,6 +5,7 @@ import java.util.Stack;
 
 import loo1.plp.expressions2.expression.Id;
 import loo1.plp.expressions2.memory.VariavelNaoDeclaradaException;
+import loo1.plp.orientadaObjetos1.comando.Comando;
 import loo1.plp.orientadaObjetos1.excecao.declaracao.ObjetoJaDeclaradoException;
 import loo1.plp.orientadaObjetos1.excecao.declaracao.ObjetoNaoDeclaradoException;
 import loo1.plp.orientadaObjetos1.excecao.execucao.EntradaInvalidaException;
@@ -118,4 +119,20 @@ public interface AmbienteExecucaoOO1 extends AmbienteOO1<Valor> {
      * declarada.
      */
     public Valor getValor(Id idArg) throws VariavelNaoDeclaradaException;
+
+    /**
+     * Empilha um comando para ser executado na saida do metodo (ou do
+     * programa, se fora de qualquer metodo) atual, conforme o comando
+     * <code>defer</code>.
+     * @param comando Comando a ser executado adiadamente.
+     */
+    public void adicionaDefer(Comando comando);
+
+    /**
+     * Remove e retorna o ultimo comando empilhado por <code>defer</code>
+     * nesta invocacao (ordem LIFO), ou <code>null</code> se nao houver
+     * nenhum comando adiado pendente.
+     * @return o ultimo comando adiado pendente, ou <code>null</code>.
+     */
+    public Comando removeUltimoDefer();
 }

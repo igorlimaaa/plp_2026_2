@@ -73,8 +73,15 @@ public class ChamadaProcedimento implements Comando {
 
         ambiente.incrementa();
         ambiente = bindParameters(ambiente, procedimento.getParametrosFormais());
-        ambiente = procedimento.getComando().executar(ambiente);
-        ambiente.restaura();
+        try {
+            ambiente = procedimento.getComando().executar(ambiente);
+        } finally {
+            Comando comandoAdiado;
+            while ((comandoAdiado = ambiente.removeUltimoDefer()) != null) {
+                ambiente = comandoAdiado.executar(ambiente);
+            }
+            ambiente.restaura();
+        }
         return ambiente;
     }
 

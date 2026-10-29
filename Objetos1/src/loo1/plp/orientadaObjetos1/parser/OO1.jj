@@ -175,6 +175,7 @@ TOKEN : /* TOKENS DE OO1 */
 | < TRY : "try" >
 | < CATCH : "catch" >
 | < FINALLY : "finally" >
+| < DEFER : "defer" >
 }
 
 TOKEN : /* TOKENS DOS POSS�VEIS TIPOS */
@@ -340,6 +341,7 @@ Sequencial PComandoSequencial() :
  *           		| New
  *          		| Atribuicao
  *          		| Throw
+ *          		| Defer
  *                  | "("Comando")
  **/
 Comando PComandoSimples() :
@@ -369,6 +371,8 @@ Comando PComandoSimples() :
     retorno = PThrow()
   | LOOKAHEAD(< TRY >)
     retorno = PTryCatchFinally()
+  | LOOKAHEAD(< DEFER >)
+    retorno = PDefer()
   | < LPAREN > retorno = PComando() < RPAREN >
   )
   {
@@ -568,6 +572,20 @@ Throw PThrow() :
   < THROW > exp = PExpressao()
   {
     return new Throw(exp);
+  }
+}
+
+/**
+ * Defer ::= "defer" Comando
+ **/
+Defer PDefer() :
+{
+  Comando comandoAdiado;
+}
+{
+  < DEFER > comandoAdiado = PComandoSimples()
+  {
+    return new Defer(comandoAdiado);
   }
 }
 
