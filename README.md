@@ -16,7 +16,9 @@ Suporte ao Mecanismo de Exceções (`try` / `catch` / `finally` / `throw`) e Adi
 - **Lançamento Explícito de Erro (`throw`):** Interrompe a sequência normal do bloco e sinaliza uma exceção contendo um valor ou mensagem.
   - [Throw.java](https://github.com/igorlimaaa/plp_2026_2/blob/main/Objetos1/src/loo1/plp/orientadaObjetos1/comando/Throw.java)
 - **Captura e Tratamento (`try` / `catch`):** Avalia o bloco monitorado e, em caso de exceção, redireciona o fluxo para o `catch`, registrando o erro em uma variável local com escopo isolado.
+  - [TryCatchFinally.java](https://github.com/igorlimaaa/plp_2026_2/blob/main/Objetos1/src/loo1/plp/orientadaObjetos1/comando/TryCatchFinally.java)
 - **Garantia de Finalização (`finally`):** Bloco cuja execução é garantida obrigatoriamente antes de concluir a instrução `try`, independentemente da ocorrência de exceções.
+  - [TryCatchFinally.java](https://github.com/igorlimaaa/plp_2026_2/blob/main/Objetos1/src/loo1/plp/orientadaObjetos1/comando/TryCatchFinally.java)
 - **Comando de Adiamento (`defer`):** Agenda um comando para ser executado obrigatoriamente no momento de saída do método atual. Múltiplos comandos `defer` declarados dentro do método são organizados em uma pilha LIFO.
 
 ## 3. Exemplo de Código na Linguagem Estendida
