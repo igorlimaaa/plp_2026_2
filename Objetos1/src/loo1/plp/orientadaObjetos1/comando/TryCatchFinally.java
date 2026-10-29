@@ -63,16 +63,20 @@ public class TryCatchFinally implements Comando {
             throws VariavelNaoDeclaradaException, VariavelJaDeclaradaException,
             ProcedimentoNaoDeclaradoException, ProcedimentoJaDeclaradoException,
             ClasseJaDeclaradaException, ClasseNaoDeclaradaException {
-        boolean tipoTryValido = comandoTry.checaTipo(ambiente);
-        boolean tipoCatchValido;
+        if (!comandoTry.checaTipo(ambiente)) {
+            return false;
+        }
+
         ambiente.incrementa();
         try {
             ambiente.map(identificadorCatch, TipoExcecao.INSTANCIA);
-            tipoCatchValido = comandoCatch.checaTipo(ambiente);
+            if (!comandoCatch.checaTipo(ambiente)) {
+                return false;
+            }
         } finally {
             ambiente.restaura();
         }
-        boolean tipoFinallyValido = comandoFinally == null || comandoFinally.checaTipo(ambiente);
-        return tipoTryValido && tipoCatchValido && tipoFinallyValido;
+
+        return comandoFinally == null || comandoFinally.checaTipo(ambiente);
     }
 }
