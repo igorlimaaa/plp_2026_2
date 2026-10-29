@@ -1,4 +1,4 @@
-# Proposta de Projeto — Rascunho
+# Proposta de Projeto
 
 **Disciplina:** Paradigmas de Linguagens de Programação (IN1007)
 **Professor:** Augusto Sampaio
@@ -147,10 +147,45 @@ cd Objetos1
 mvn compile exec:java -Dexec.args=../Testes/TesteOO1_ContaBancaria.txt
 ```
 
-O Maven gera o parser JavaCC, compila o projeto e executa o arquivo informado. Para executar outro programa, substitua o caminho depois de `-Dexec.args=`. Os testes do comando `try/catch/finally` estão em `Objetos1/src/loo1/plp/orientadaObjetos1/testes/TesteTryCatchFinally.java`; execute-os a partir de `Objetos1` após compilar com `mvn compile`:
+O Maven gera o parser JavaCC, compila o projeto e executa o arquivo informado. Para executar outro programa, substitua o caminho depois de `-Dexec.args=`.
+
+### Compilar e executar os testes sem os plugins Maven
+
+**Pré-requisito:** Java 8. O `pom.xml` depende de plugins Maven antigos que podem não ser resolvidos fora da rede interna do CNJ. Nesse caso, use o JavaCC standalone para gerar o parser e compilar o projeto:
 
 ```bash
-java -cp target/classes loo1.plp.orientadaObjetos1.testes.TesteTryCatchFinally
+cd Objetos1
+curl -o /tmp/javacc-5.0.jar https://repo1.maven.org/maven2/net/java/dev/javacc/javacc/5.0/javacc-5.0.jar
+mkdir -p target/generated-sources/javacc/loo1/plp/orientadaObjetos1/parser target/classes
+java -cp /tmp/javacc-5.0.jar javacc \
+  -OUTPUT_DIRECTORY=target/generated-sources/javacc/loo1/plp/orientadaObjetos1/parser \
+  src/loo1/plp/orientadaObjetos1/parser/OO1.jj
+find src target/generated-sources -name "*.java" > /tmp/sources.txt
+javac -encoding UTF-8 -d target/classes @/tmp/sources.txt
 ```
 
-**Compatibilidade do exemplo:** até o momento, o parser reconhece `throw`, `try/catch/finally`, `>` e `<`, além da sintaxe OO1 usada para atributos (`int`), procedimentos (`proc`), condições (`then`), atribuições (`:=`) e objetos (`:= new Classe`). O exemplo completo também contém `defer`, que ainda não é reconhecido e será implementado separadamente depois.
+Execute as suítes de testes de `defer`, `try/catch/finally` e operadores relacionais:
+
+```bash
+java -cp target/classes loo1.plp.orientadaObjetos1.testes.TesteDefer
+java -cp target/classes loo1.plp.orientadaObjetos1.testes.TesteTryCatchFinally
+java -cp target/classes loo1.plp.orientadaObjetos1.testes.TesteOperadoresRelacionais
+```
+
+Por fim, execute o exemplo da conta bancária como teste ponta a ponta:
+
+```bash
+java -cp target/classes loo1.plp.orientadaObjetos1.parser.OO1Parser \
+  ../Testes/TesteOO1_ContaBancaria.txt
+```
+
+A saída esperada do exemplo, na ordem, é:
+
+```text
+Falha ao processar saque: Saldo insuficiente para o saque
+3. [finally] Bloco de confirmacao concluido.
+2. [defer] Estado do objeto conta liberado.
+1. [defer] Registro de auditoria gravado no log.
+```
+
+O exemplo usa `throw`, `try/catch/finally` e `defer`, além de atributos (`int`), procedimentos (`proc`), condições (`then`), atribuições (`:=`) e instanciação de objetos (`:= new Classe`), todos reconhecidos pelo parser atual.
