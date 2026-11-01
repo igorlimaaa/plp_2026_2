@@ -3,6 +3,7 @@ import { FiPlay } from "react-icons/fi";
 import hljs from "highlight.js/lib/core";
 
 import type { CodeCell } from "../../models/cell/CodeCell";
+import { applyTab } from "../../lib/indent";
 import { escapeHtml } from "../../lib/utils";
 import type { ScopeSnapshot, SourceRange } from "../../models/types/execution";
 
@@ -46,6 +47,9 @@ export function CodeCellView({
   const editorRef = useRef<HTMLTextAreaElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const [isOutputMenuOpen, setIsOutputMenuOpen] = useState(false);
+  const pendingSelectionRef = useRef<{ start: number; end: number } | null>(null);
+  // Após Esc, o próximo Tab sai do editor (evita prender o foco do teclado dentro do campo).
+  const releaseTabRef = useRef(false);
 
   const toOffset = (line: number, column: number) => {
     const lines = cell.content.split("\n");
@@ -189,6 +193,14 @@ export function CodeCellView({
 
   useLayoutEffect(() => {
     const textarea = editorRef.current;
+    const pending = pendingSelectionRef.current;
+    if (!textarea || !pending) return;
+    pendingSelectionRef.current = null;
+    textarea.setSelectionRange(pending.start, pending.end);
+  }, [cell.content]);
+
+  useLayoutEffect(() => {
+    const textarea = editorRef.current;
     if (!textarea) return;
     textarea.style.height = "0px";
     textarea.style.height = `${textarea.scrollHeight}px`;
@@ -236,6 +248,26 @@ export function CodeCellView({
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Escape") {
+      releaseTabRef.current = true;
+      return;
+    }
+    if (e.key === "Tab" && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      if (releaseTabRef.current) {
+        releaseTabRef.current = false;
+        return;
+      }
+      e.preventDefault();
+      const textarea = e.currentTarget;
+      const result = applyTab(textarea.value, textarea.selectionStart, textarea.selectionEnd, e.shiftKey);
+      // Sem mudança no texto não há re-render para aplicar a seleção; guardá-la a aplicaria na próxima digitação.
+      if (result.value === textarea.value) return;
+      pendingSelectionRef.current = { start: result.selectionStart, end: result.selectionEnd };
+      onClearActiveScope();
+      onChange(result.value);
+      return;
+    }
+    releaseTabRef.current = false;
     if (e.key === "Enter" && e.shiftKey) {
       e.preventDefault();
       if (!disabled && !isRunning && !isEmpty) onRun(cell.input);

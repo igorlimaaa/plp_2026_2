@@ -1,10 +1,12 @@
 import type { MouseEventHandler } from "react";
-import { FiArrowDown, FiArrowUp, FiEdit2, FiEdit3, FiTrash2 } from "react-icons/fi";
+import { FiAlignLeft, FiArrowDown, FiArrowUp, FiEdit2, FiEdit3, FiTrash2 } from "react-icons/fi";
 
 interface CellActionsViewProps {
   disabled: boolean;
   showEdit?: boolean;
   isEditing?: boolean;
+  showIndent?: boolean;
+  onIndent?: MouseEventHandler<HTMLButtonElement>;
   onEdit?: MouseEventHandler<HTMLButtonElement>;
   onMoveUp: MouseEventHandler<HTMLButtonElement>;
   onMoveDown: MouseEventHandler<HTMLButtonElement>;
@@ -15,6 +17,8 @@ export function CellActionsView({
   disabled,
   showEdit = false,
   isEditing = false,
+  showIndent = false,
+  onIndent,
   onEdit,
   onMoveUp,
   onMoveDown,
@@ -31,6 +35,18 @@ export function CellActionsView({
       <button type="button" className={btnClass} onClick={onMoveDown} disabled={disabled} aria-label="Move cell down" title="Move down">
         <FiArrowDown aria-hidden="true" />
       </button>
+      {showIndent && (
+        <button
+          type="button"
+          className={btnClass}
+          onClick={onIndent}
+          disabled={disabled}
+          aria-label="Indent code"
+          title="Indent code"
+        >
+          <FiAlignLeft aria-hidden="true" />
+        </button>
+      )}
       {showEdit && (
         <button
           type="button"

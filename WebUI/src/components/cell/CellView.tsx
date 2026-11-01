@@ -6,6 +6,7 @@ import { MarkdownCellView } from "./MarkdownCellView";
 import type { ID } from "../../models/types/id";
 import { useCell } from "../../hooks/useCell";
 import { useNotebook } from "../../hooks/useNotebook";
+import { formatIndentation } from "../../lib/indent";
 
 interface CellViewProps {
   notebookId: ID;
@@ -66,6 +67,11 @@ export function CellView({ notebookId, cellId }: CellViewProps) {
             disabled={notebookLocked}
             showEdit={isMarkdown}
             isEditing={isMarkdown ? cell.isEditing : false}
+            showIndent={isCode}
+            onIndent={() => {
+              clearActiveScope();
+              updateContent(formatIndentation(cell.content));
+            }}
             onEdit={() => isMarkdown && setEditing(!cell.isEditing)}
             onMoveUp={moveUp}
             onMoveDown={moveDown}
