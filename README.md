@@ -9,7 +9,7 @@
 
 Suporte ao Mecanismo de Exceções (`try` / `catch` / `finally` / `throw`) e Adiamento de Execução (`defer`) na **Linguagem Orientada a Objetos 1 (OO1)** via JavaCC.
 
-#### 🔗 [Apresentação em slides](https://www.figma.com/deck/CEvxdYZf0PaplMmrBkzZbe/PLP---Apresenta%C3%A7%C3%A3o-1?node-id=1-27&t=E2nRvbpGEjQCdevA-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1)
+#### 🔗 [Apresentação em slides](https://www.figma.com/deck/kgBKR8wvObVucXcQqoGAJ0/PLP---Apresenta%C3%A7%C3%A3o?node-id=1-27&t=RgprTfxjn2aJGQjE-1)
 
 ## 2. Descrição das Funcionalidades
 
