@@ -1,0 +1,15 @@
+*.lock
+.metadata/
+.recommenders/
+
+*/bin/
+*/.classpath
+*/.project
+*/.settings
+
+*/target
+
+Gemfile.lock
+.bundle
+
+.DS_Store
