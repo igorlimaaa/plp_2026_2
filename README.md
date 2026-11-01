@@ -185,6 +185,7 @@ A saída esperada do exemplo, na ordem, é:
 ```text
 Falha ao processar saque: Saldo insuficiente para o saque
 3. [finally] Bloco de confirmacao concluido.
+4. [defer] Operação inválida.
 2. [defer] Estado do objeto conta liberado.
 1. [defer] Registro de auditoria gravado no log.
 ```
