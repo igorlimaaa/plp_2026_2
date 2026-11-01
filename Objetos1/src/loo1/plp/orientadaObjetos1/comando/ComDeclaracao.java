@@ -45,12 +45,12 @@ public class ComDeclaracao implements Comando {
                ProcedimentoNaoDeclaradoException, ProcedimentoJaDeclaradoException,
                ClasseNaoDeclaradaException, ClasseJaDeclaradaException,
                ObjetoJaDeclaradoException, ObjetoNaoDeclaradoException, EntradaInvalidaException{
-        ambiente.incrementa();
+        final AmbienteExecucaoOO1 escopo = ambiente;
+        escopo.incrementa();
         try {
-            ambiente = comando.executar(declaracao.elabora(ambiente));
-            return ambiente;
+            return comando.executar(declaracao.elabora(escopo));
         } finally {
-            ambiente.restaura();
+            escopo.restaura();
         }
     }
 
