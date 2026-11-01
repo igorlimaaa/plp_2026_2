@@ -3,6 +3,7 @@ name: "Build, Generate docs, and Deploy"
 on:
   push:
     branches:
+      - main
       - master
       - develop
   workflow_dispatch:
