@@ -192,6 +192,11 @@ TOKEN : /* TOKENS DE OO1 */
 | < CLASSE : "classe" >
 | < NULL : "null" >
 | < PROC : "proc" >
+| < THROW : "throw" >
+| < TRY : "try" >
+| < CATCH : "catch" >
+| < FINALLY : "finally" >
+| < DEFER : "defer" >
 }
 
 TOKEN : /* TOKENS DOS POSS�VEIS TIPOS */
@@ -381,6 +386,12 @@ Comando PComandoSimples() :
     retorno = PNew()
   | LOOKAHEAD(PLeftExpression() < ATTRIB >)
     retorno = PAtribuicao()
+  | LOOKAHEAD(< THROW >)
+    retorno = PThrow()
+  | LOOKAHEAD(< TRY >)
+    retorno = PTryCatchFinally()
+  | LOOKAHEAD(< DEFER >)
+    retorno = PDefer()
   | < LPAREN > retorno = PComando() < RPAREN >
   )
   {
@@ -802,6 +813,52 @@ Expressao PExpLength() :
 }
 
 /**
+ * Throw ::= "throw" Expressao
+ **/
+Throw PThrow() :
+{
+  Expressao exp;
+}
+{
+  < THROW > exp = PExpressao()
+  {
+    return new Throw(exp);
+  }
+}
+
+/**
+ * Defer ::= "defer" Comando
+ **/
+Defer PDefer() :
+{
+  Comando comandoAdiado;
+}
+{
+  < DEFER > comandoAdiado = PComandoSimples()
+  {
+    return new Defer(comandoAdiado);
+  }
+}
+
+TryCatchFinally PTryCatchFinally() :
+{
+  Comando comandoTry;
+  Id identificadorCatch;
+  Comando comandoCatch;
+  Comando comandoFinally = null;
+}
+{
+  < TRY > < LBRACE > comandoTry = PComando() < RBRACE >
+  < CATCH > < LPAREN > identificadorCatch = PId() < RPAREN >
+  < LBRACE > comandoCatch = PComando() < RBRACE >
+  [ < FINALLY > < LBRACE > comandoFinally = PComando() < RBRACE > ]
+  {
+    return new TryCatchFinally(comandoTry, identificadorCatch,
+        comandoCatch, comandoFinally);
+  }
+}
+
+/**
  * ExpBinaria ::= ExpUnaria
  *        ( "+" ExpUnaria
  * 				| "-" ExpUnaria
@@ -821,6 +878,14 @@ Expressao PExpBinaria() :
       < EQ > param2 = PExpBinaria2()
       {
         retorno = new ExpEquals(retorno, param2);
+      }
+    | < GT > param2 = PExpBinaria2()
+      {
+        retorno = new ExpMaior(retorno, param2);
+      }
+    | < LT > param2 = PExpBinaria2()
+      {
+        retorno = new ExpMenor(retorno, param2);
       }
     )*
   )
