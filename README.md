@@ -11,6 +11,8 @@ Suporte ao Mecanismo de Exceções (`try` / `catch` / `finally` / `throw`) e Adi
 
 #### 🔗 [Apresentação em slides](https://www.figma.com/deck/kgBKR8wvObVucXcQqoGAJ0/PLP---Apresenta%C3%A7%C3%A3o?node-id=1-27&t=RgprTfxjn2aJGQjE-1)
 
+#### 🔗 [Executar na IDE da disciplina](https://igorlimaaa.github.io/plp_2026_2/ide/)  (linguagem **OO1**)
+
 ## 2. Descrição das Funcionalidades
 
 - **Lançamento Explícito de Erro (`throw`):** Interrompe a sequência normal do bloco e sinaliza uma exceção contendo um valor ou mensagem.
