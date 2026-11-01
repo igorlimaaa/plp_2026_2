@@ -32,16 +32,17 @@ Suporte ao Mecanismo de Exceções (`try` / `catch` / `finally` / `throw`) e Adi
     proc sacar(int valor) {
       // defer: executado obrigatoriamente ao finalizar a execução do método (ordem LIFO)
       defer write("1. [defer] Registro de auditoria gravado no log.");
-      defer write("2. [defer] Estado do objeto conta liberado.");
 
       try {
+        defer write("2. [defer] Estado do objeto conta liberado.");
         if valor > this.saldo then {
           throw "Saldo insuficiente para o saque"
         };
         this.saldo := this.saldo - valor;
         write("Saque efetuado com sucesso. Saldo restante: " ++ this.saldo)
       } catch (erro) {
-        write("Falha ao processar saque: " ++ erro)
+        write("Falha ao processar saque: " ++ erro);
+        defer write("4. [defer] Operação inválida.")
       } finally {
         // finally: executado obrigatoriamente ao final da estrutura try/catch
         write("3. [finally] Bloco de confirmacao concluido.")
