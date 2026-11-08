@@ -1,0 +1,685 @@
+{
+  "version": "1.0",
+  "id": "1793557968870-mi2pkyv",
+  "name": "Apresentação – Grupo 1",
+  "createdAt": "2026-11-01T18:32:48.870Z",
+  "updatedAt": "2026-11-04T22:42:17.891Z",
+  "notebooks": [
+    {
+      "id": "1793557968870-3m5a0gp",
+      "name": "Throw + catch",
+      "languageName": "OO1",
+      "notebookScopeEnabled": false,
+      "createdAt": "2026-11-01T18:32:48.870Z",
+      "updatedAt": "2026-11-04T22:42:03.235Z",
+      "cells": [
+        {
+          "id": "1793557968870-ef40rsk",
+          "type": "code",
+          "content": "{\n  classe C { int x = 0; proc f() { skip } };\n  {\n    C c := new C;\n    try {\n      throw \"falhou\"\n    } catch (e) {\n      write(\"capturado: \" ++ e)\n    }\n  }\n}",
+          "createdAt": "2026-11-01T18:32:48.870Z",
+          "updatedAt": "2026-11-04T22:22:48.436Z",
+          "input": "",
+          "output": {
+            "stdout": "capturado: falhou ",
+            "stderr": "sintaxe verificada com sucesso!",
+            "result": "capturado: falhou ",
+            "compilationEnv": {
+              "languageId": "oo1",
+              "frames": [
+                {
+                  "name": "C",
+                  "scope": "class",
+                  "bindings": {
+                    "x": {
+                      "type": "TipoPrimitivo",
+                      "value": "int",
+                      "display": "int"
+                    },
+                    "this": {
+                      "type": "TipoClasse",
+                      "value": "C",
+                      "display": "C"
+                    }
+                  },
+                  "sourceRange": {
+                    "startLine": 2,
+                    "startColumn": 3,
+                    "endLine": 2,
+                    "endColumn": 43
+                  }
+                },
+                {
+                  "name": "f",
+                  "scope": "procedure",
+                  "bindings": {},
+                  "sourceRange": {
+                    "startLine": 2,
+                    "startColumn": 25,
+                    "endLine": 2,
+                    "endColumn": 41
+                  }
+                },
+                {
+                  "scope": "block",
+                  "bindings": {
+                    "c": {
+                      "type": "TipoClasse",
+                      "value": "C",
+                      "display": "C"
+                    }
+                  },
+                  "sourceRange": {
+                    "startLine": 3,
+                    "startColumn": 3,
+                    "endLine": 10,
+                    "endColumn": 3
+                  }
+                }
+              ]
+            },
+            "executionTime": 14.40000057220459,
+            "success": true
+          },
+          "executionOrder": 3
+        }
+      ]
+    },
+    {
+      "id": "1793558045065-el2iiem",
+      "name": "Sem exceção: o catch não roda e o finally roda",
+      "languageName": "OO1",
+      "notebookScopeEnabled": false,
+      "createdAt": "2026-11-01T18:34:05.065Z",
+      "updatedAt": "2026-11-01T18:35:34.387Z",
+      "cells": [
+        {
+          "id": "1793558078793-3x999dl",
+          "type": "code",
+          "content": "{\n  classe C {\n    int x = 0;\n    proc f() {\n      skip\n    }\n  };\n  {\n    C c := new C;\n    try {\n      write(\"sem erro\")\n    } catch (e) {\n      write(\"nao deve aparecer\")\n    } finally {\n      write(\"finally sempre roda\")\n    }\n  }\n}",
+          "createdAt": "2026-11-01T18:34:38.793Z",
+          "updatedAt": "2026-11-03T12:57:59.074Z",
+          "input": "",
+          "output": {
+            "stdout": "sem erro finally sempre roda ",
+            "stderr": "sintaxe verificada com sucesso!",
+            "result": "sem erro finally sempre roda ",
+            "compilationEnv": {
+              "languageId": "oo1",
+              "frames": [
+                {
+                  "name": "C",
+                  "scope": "class",
+                  "bindings": {
+                    "x": {
+                      "type": "TipoPrimitivo",
+                      "value": "int",
+                      "display": "int"
+                    },
+                    "this": {
+                      "type": "TipoClasse",
+                      "value": "C",
+                      "display": "C"
+                    }
+                  },
+                  "sourceRange": {
+                    "startLine": 2,
+                    "startColumn": 3,
+                    "endLine": 7,
+                    "endColumn": 3
+                  }
+                },
+                {
+                  "name": "f",
+                  "scope": "procedure",
+                  "bindings": {},
+                  "sourceRange": {
+                    "startLine": 4,
+                    "startColumn": 5,
+                    "endLine": 6,
+                    "endColumn": 5
+                  }
+                },
+                {
+                  "scope": "block",
+                  "bindings": {
+                    "c": {
+                      "type": "TipoClasse",
+                      "value": "C",
+                      "display": "C"
+                    }
+                  },
+                  "sourceRange": {
+                    "startLine": 8,
+                    "startColumn": 3,
+                    "endLine": 17,
+                    "endColumn": 3
+                  }
+                }
+              ]
+            },
+            "executionTime": 4.899999998509884,
+            "success": true
+          },
+          "executionOrder": 1
+        }
+      ]
+    },
+    {
+      "id": "1793558149273-q81cqx9",
+      "name": "Finally depois do catch",
+      "languageName": "OO1",
+      "notebookScopeEnabled": false,
+      "createdAt": "2026-11-01T18:35:49.273Z",
+      "updatedAt": "2026-11-04T22:42:00.214Z",
+      "cells": [
+        {
+          "id": "1793558159908-9v3gggc",
+          "type": "code",
+          "content": "{\n  classe C {\n    int x = 0;\n    proc f() {\n      skip\n    }\n  };\n  {\n    C c := new C;\n    try {\n      throw \"erro\"\n    } catch (e) {\n      write(\"catch\")\n    } finally {\n      write(\"finally apos catch\")\n    }\n  }\n}",
+          "createdAt": "2026-11-01T18:35:59.908Z",
+          "updatedAt": "2026-11-03T12:57:59.074Z",
+          "input": "",
+          "output": {
+            "stdout": "catch finally apos catch ",
+            "stderr": "sintaxe verificada com sucesso!",
+            "result": "catch finally apos catch ",
+            "compilationEnv": {
+              "languageId": "oo1",
+              "frames": [
+                {
+                  "name": "C",
+                  "scope": "class",
+                  "bindings": {
+                    "x": {
+                      "type": "TipoPrimitivo",
+                      "value": "int",
+                      "display": "int"
+                    },
+                    "this": {
+                      "type": "TipoClasse",
+                      "value": "C",
+                      "display": "C"
+                    }
+                  },
+                  "sourceRange": {
+                    "startLine": 2,
+                    "startColumn": 3,
+                    "endLine": 7,
+                    "endColumn": 3
+                  }
+                },
+                {
+                  "name": "f",
+                  "scope": "procedure",
+                  "bindings": {},
+                  "sourceRange": {
+                    "startLine": 4,
+                    "startColumn": 5,
+                    "endLine": 6,
+                    "endColumn": 5
+                  }
+                },
+                {
+                  "scope": "block",
+                  "bindings": {
+                    "c": {
+                      "type": "TipoClasse",
+                      "value": "C",
+                      "display": "C"
+                    }
+                  },
+                  "sourceRange": {
+                    "startLine": 8,
+                    "startColumn": 3,
+                    "endLine": 17,
+                    "endColumn": 3
+                  }
+                }
+              ]
+            },
+            "executionTime": 4.200000002980232,
+            "success": true
+          },
+          "executionOrder": 1
+        }
+      ]
+    },
+    {
+      "id": "1793558231800-elufsyl",
+      "name": "Throw sem catch",
+      "languageName": "OO1",
+      "notebookScopeEnabled": false,
+      "createdAt": "2026-11-01T18:37:11.800Z",
+      "updatedAt": "2026-11-04T22:42:07.738Z",
+      "cells": [
+        {
+          "id": "1793558235668-axkyq5m",
+          "type": "code",
+          "content": "{\n  classe C {\n    int x = 0;\n    proc f() {\n      skip\n    }\n  };\n  {\n    C c := new C;\n    throw \"ninguem captura\"\n  };\n  write(\"Teste → não vai imprimir!\")\n}",
+          "createdAt": "2026-11-01T18:37:15.668Z",
+          "updatedAt": "2026-11-04T22:26:55.065Z",
+          "input": "",
+          "output": {
+            "stdout": "",
+            "stderr": "ninguem captura",
+            "result": null,
+            "compilationEnv": {
+              "languageId": "oo1",
+              "frames": [
+                {
+                  "name": "C",
+                  "scope": "class",
+                  "bindings": {
+                    "x": {
+                      "type": "TipoPrimitivo",
+                      "value": "int",
+                      "display": "int"
+                    },
+                    "this": {
+                      "type": "TipoClasse",
+                      "value": "C",
+                      "display": "C"
+                    }
+                  },
+                  "sourceRange": {
+                    "startLine": 2,
+                    "startColumn": 3,
+                    "endLine": 7,
+                    "endColumn": 3
+                  }
+                },
+                {
+                  "name": "f",
+                  "scope": "procedure",
+                  "bindings": {},
+                  "sourceRange": {
+                    "startLine": 4,
+                    "startColumn": 5,
+                    "endLine": 6,
+                    "endColumn": 5
+                  }
+                },
+                {
+                  "scope": "block",
+                  "bindings": {
+                    "c": {
+                      "type": "TipoClasse",
+                      "value": "C",
+                      "display": "C"
+                    }
+                  },
+                  "sourceRange": {
+                    "startLine": 8,
+                    "startColumn": 3,
+                    "endLine": 11,
+                    "endColumn": 3
+                  }
+                }
+              ]
+            },
+            "executionTime": 1.9000005722045898,
+            "success": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "1793558270567-hgdqkrf",
+      "name": "Defer em pilha (ordem LIFO)",
+      "languageName": "OO1",
+      "notebookScopeEnabled": false,
+      "createdAt": "2026-11-01T18:37:50.567Z",
+      "updatedAt": "2026-11-04T22:42:10.820Z",
+      "cells": [
+        {
+          "id": "1793558273425-4r6hu8k",
+          "type": "code",
+          "content": "{\n  classe C {\n    int x = 0;\n    proc f() {\n      defer write(\"1º defer\");\n      defer write(\"2º defer\");\n      defer write(\"3º defer\");\n      write(\"corpo do metodo\")\n    }\n  };\n  {\n    C c := new C;\n    c.f()\n  }\n}",
+          "createdAt": "2026-11-01T18:37:53.425Z",
+          "updatedAt": "2026-11-04T22:27:35.306Z",
+          "input": "",
+          "output": {
+            "stdout": "corpo do metodo 3º defer 2º defer 1º defer ",
+            "stderr": "sintaxe verificada com sucesso!",
+            "result": "corpo do metodo 3º defer 2º defer 1º defer ",
+            "compilationEnv": {
+              "languageId": "oo1",
+              "frames": [
+                {
+                  "name": "C",
+                  "scope": "class",
+                  "bindings": {
+                    "x": {
+                      "type": "TipoPrimitivo",
+                      "value": "int",
+                      "display": "int"
+                    },
+                    "this": {
+                      "type": "TipoClasse",
+                      "value": "C",
+                      "display": "C"
+                    }
+                  },
+                  "sourceRange": {
+                    "startLine": 2,
+                    "startColumn": 3,
+                    "endLine": 10,
+                    "endColumn": 3
+                  }
+                },
+                {
+                  "name": "f",
+                  "scope": "procedure",
+                  "bindings": {},
+                  "sourceRange": {
+                    "startLine": 4,
+                    "startColumn": 5,
+                    "endLine": 9,
+                    "endColumn": 5
+                  }
+                },
+                {
+                  "scope": "block",
+                  "bindings": {
+                    "c": {
+                      "type": "TipoClasse",
+                      "value": "C",
+                      "display": "C"
+                    }
+                  },
+                  "sourceRange": {
+                    "startLine": 11,
+                    "startColumn": 3,
+                    "endLine": 14,
+                    "endColumn": 3
+                  }
+                }
+              ]
+            },
+            "executionTime": 5.800000190734863,
+            "success": true
+          },
+          "executionOrder": 2
+        }
+      ]
+    },
+    {
+      "id": "1793558343817-vsvhnd1",
+      "name": "Defer com exceção externa",
+      "languageName": "OO1",
+      "notebookScopeEnabled": false,
+      "createdAt": "2026-11-01T18:39:03.817Z",
+      "updatedAt": "2026-11-04T22:42:14.108Z",
+      "cells": [
+        {
+          "id": "1793558346156-nxkb95l",
+          "type": "code",
+          "content": "{\n  classe C {\n    int saldo = 10;\n    proc g(int n) {\n      defer write(\"END\");\n      write(\"START\");\n      if n > this.saldo\n      then {\n        throw \"estourou!\"\n      } else {\n        write(\"OK\")\n      }\n    }\n  };\n  {\n    C c := new C;\n    try {\n      c.g(50)\n    } catch (e) {\n      write(\"pegou erro: \" ++ e)\n    }\n  }\n}",
+          "createdAt": "2026-11-01T18:39:06.156Z",
+          "updatedAt": "2026-11-04T22:35:04.761Z",
+          "input": "",
+          "output": {
+            "stdout": "START END pegou erro: estourou! ",
+            "stderr": "sintaxe verificada com sucesso!",
+            "result": "START END pegou erro: estourou! ",
+            "compilationEnv": {
+              "languageId": "oo1",
+              "frames": [
+                {
+                  "name": "C",
+                  "scope": "class",
+                  "bindings": {
+                    "saldo": {
+                      "type": "TipoPrimitivo",
+                      "value": "int",
+                      "display": "int"
+                    },
+                    "this": {
+                      "type": "TipoClasse",
+                      "value": "C",
+                      "display": "C"
+                    }
+                  },
+                  "sourceRange": {
+                    "startLine": 2,
+                    "startColumn": 3,
+                    "endLine": 14,
+                    "endColumn": 3
+                  }
+                },
+                {
+                  "name": "g",
+                  "scope": "procedure",
+                  "bindings": {
+                    "n": {
+                      "type": "TipoPrimitivo",
+                      "value": "int",
+                      "display": "int"
+                    }
+                  },
+                  "sourceRange": {
+                    "startLine": 4,
+                    "startColumn": 5,
+                    "endLine": 13,
+                    "endColumn": 5
+                  }
+                },
+                {
+                  "scope": "block",
+                  "bindings": {
+                    "c": {
+                      "type": "TipoClasse",
+                      "value": "C",
+                      "display": "C"
+                    }
+                  },
+                  "sourceRange": {
+                    "startLine": 15,
+                    "startColumn": 3,
+                    "endLine": 22,
+                    "endColumn": 3
+                  }
+                }
+              ]
+            },
+            "executionTime": 1.3999996185302734,
+            "success": true
+          },
+          "executionOrder": 16
+        }
+      ]
+    },
+    {
+      "id": "1793558493902-35ov6hs",
+      "name": "Variável do catch não vira número (erro de tipo)",
+      "languageName": "OO1",
+      "notebookScopeEnabled": false,
+      "createdAt": "2026-11-01T18:41:33.902Z",
+      "updatedAt": "2026-11-01T18:41:50.552Z",
+      "cells": [
+        {
+          "id": "1793558501973-jqll8t5",
+          "type": "code",
+          "content": "{\n  classe C { int x = 0; proc f() { skip } };\n  {\n    C c := new C;\n    try { throw \"a\" } catch (e) { write(e + 1) }\n  }\n}",
+          "createdAt": "2026-11-01T18:41:41.973Z",
+          "updatedAt": "2026-11-03T12:57:59.074Z",
+          "input": "",
+          "output": {
+            "stdout": "",
+            "stderr": "erro de tipos!",
+            "result": null,
+            "executionTime": 3.199999999254942,
+            "success": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "1793558546954-vi2pn80",
+      "name": "Try aninhado com throw dentro do catch",
+      "languageName": "OO1",
+      "notebookScopeEnabled": false,
+      "createdAt": "2026-11-01T18:42:26.954Z",
+      "updatedAt": "2026-11-04T22:42:17.891Z",
+      "cells": [
+        {
+          "id": "1793558550500-ahcnq24",
+          "type": "code",
+          "content": "{\n  classe C { int x = 0; proc f() { skip } };\n  {\n    C c := new C;\n    try {\n      try {\n        throw \"interno\"\n      }\n      catch (e) {\n        throw \"relancado\"\n      }\n    } catch (e2) {\n      write(\"externo pegou: \" ++ e2)\n    }\n  }\n}",
+          "createdAt": "2026-11-01T18:42:30.500Z",
+          "updatedAt": "2026-11-04T22:39:44.180Z",
+          "input": "",
+          "output": {
+            "stdout": "externo pegou: relancado ",
+            "stderr": "sintaxe verificada com sucesso!",
+            "result": "externo pegou: relancado ",
+            "compilationEnv": {
+              "languageId": "oo1",
+              "frames": [
+                {
+                  "name": "C",
+                  "scope": "class",
+                  "bindings": {
+                    "x": {
+                      "type": "TipoPrimitivo",
+                      "value": "int",
+                      "display": "int"
+                    },
+                    "this": {
+                      "type": "TipoClasse",
+                      "value": "C",
+                      "display": "C"
+                    }
+                  },
+                  "sourceRange": {
+                    "startLine": 2,
+                    "startColumn": 3,
+                    "endLine": 2,
+                    "endColumn": 43
+                  }
+                },
+                {
+                  "name": "f",
+                  "scope": "procedure",
+                  "bindings": {},
+                  "sourceRange": {
+                    "startLine": 2,
+                    "startColumn": 25,
+                    "endLine": 2,
+                    "endColumn": 41
+                  }
+                },
+                {
+                  "scope": "block",
+                  "bindings": {
+                    "c": {
+                      "type": "TipoClasse",
+                      "value": "C",
+                      "display": "C"
+                    }
+                  },
+                  "sourceRange": {
+                    "startLine": 3,
+                    "startColumn": 3,
+                    "endLine": 6,
+                    "endColumn": 3
+                  }
+                }
+              ]
+            },
+            "executionTime": 3.900000002235174,
+            "success": true
+          },
+          "executionOrder": 1
+        }
+      ]
+    },
+    {
+      "id": "1793558599507-3jr3gq1",
+      "name": "Conta Bancária",
+      "languageName": "OO1",
+      "notebookScopeEnabled": false,
+      "createdAt": "2026-11-01T18:43:19.507Z",
+      "updatedAt": "2026-11-04T22:41:43.502Z",
+      "cells": [
+        {
+          "id": "1793558616187-cz0pxq7",
+          "type": "code",
+          "content": "{\n  classe ContaBancaria {\n    int saldo = 100;\n\n    proc sacar(int valor) {\n      // defer: executado obrigatoriamente ao finalizar a execução do método (ordem LIFO)\n      defer write(\"1. [defer] Registro de auditoria gravado no log.\");\n\n      try {\n        defer write(\"2. [defer] Estado do objeto conta liberado.\");\n        if valor > this.saldo then {\n          throw \"Saldo insuficiente para o saque\"\n        };\n        this.saldo := this.saldo - valor;\n        write(\"Saque efetuado com sucesso. Saldo restante: \" ++ this.saldo)\n      } catch (erro) {\n        write(\"Falha ao processar saque: \" ++ erro);\n        defer write(\"4. [defer] Operação inválida.\")\n      } finally {\n        // finally: executado obrigatoriamente ao final da estrutura try/catch\n        write(\"3. [finally] Bloco de confirmacao concluido.\")\n      }\n    }\n  };\n\n  {\n    ContaBancaria minhaConta := new ContaBancaria;\n    minhaConta.sacar(150)\n  }\n}",
+          "createdAt": "2026-11-01T18:43:36.187Z",
+          "updatedAt": "2026-11-04T22:41:43.502Z",
+          "input": "",
+          "output": {
+            "stdout": "Falha ao processar saque: Saldo insuficiente para o saque 3. [finally] Bloco de confirmacao concluido. 4. [defer] Operação inválida. 2. [defer] Estado do objeto conta liberado. 1. [defer] Registro de auditoria gravado no log. ",
+            "stderr": "sintaxe verificada com sucesso!",
+            "result": "Falha ao processar saque: Saldo insuficiente para o saque 3. [finally] Bloco de confirmacao concluido. 4. [defer] Operação inválida. 2. [defer] Estado do objeto conta liberado. 1. [defer] Registro de auditoria gravado no log. ",
+            "compilationEnv": {
+              "languageId": "oo1",
+              "frames": [
+                {
+                  "name": "ContaBancaria",
+                  "scope": "class",
+                  "bindings": {
+                    "saldo": {
+                      "type": "TipoPrimitivo",
+                      "value": "int",
+                      "display": "int"
+                    },
+                    "this": {
+                      "type": "TipoClasse",
+                      "value": "ContaBancaria",
+                      "display": "ContaBancaria"
+                    }
+                  },
+                  "sourceRange": {
+                    "startLine": 2,
+                    "startColumn": 3,
+                    "endLine": 24,
+                    "endColumn": 3
+                  }
+                },
+                {
+                  "name": "sacar",
+                  "scope": "procedure",
+                  "bindings": {
+                    "valor": {
+                      "type": "TipoPrimitivo",
+                      "value": "int",
+                      "display": "int"
+                    }
+                  },
+                  "sourceRange": {
+                    "startLine": 5,
+                    "startColumn": 5,
+                    "endLine": 23,
+                    "endColumn": 5
+                  }
+                },
+                {
+                  "scope": "block",
+                  "bindings": {
+                    "minhaConta": {
+                      "type": "TipoClasse",
+                      "value": "ContaBancaria",
+                      "display": "ContaBancaria"
+                    }
+                  },
+                  "sourceRange": {
+                    "startLine": 26,
+                    "startColumn": 3,
+                    "endLine": 29,
+                    "endColumn": 3
+                  }
+                }
+              ]
+            },
+            "executionTime": 3.5,
+            "success": true
+          },
+          "executionOrder": 3
+        }
+      ]
+    }
+  ]
+}
